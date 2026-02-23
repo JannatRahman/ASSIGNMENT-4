@@ -10,6 +10,7 @@ let rejected = document.getElementById('rejected-count');
 // -----------------------------
 
 const allCardSection = document.getElementById('all-cards');
+
 const mainContainer = document.querySelector('main')
 // ---------------
 
@@ -50,4 +51,13 @@ selected.classList.remove('bg-white', 'text-black');
 selected.classList.add('bg-blue-500', 'text-white');
 }
 
+// PART 3
+mainContainer.addEventListener('click', function(event){
+ const parentNode = event.target.parentNode.parentNode;
+ const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
+ const developer = parentNode.querySelector('.developer').innerText
+ const remote = parentNode.querySelector('.remote').innerText
 
+ console.log(mobileFirst, developer, remote);
+ 
+})
