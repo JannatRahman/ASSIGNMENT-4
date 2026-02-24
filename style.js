@@ -1,5 +1,6 @@
 let interviewList =  [];
 let rejectedList = [];
+let currentStatus = 'all'
 
 // STEP-1
 let total = document.getElementById('total-count');
@@ -35,6 +36,7 @@ function toggleStyle(id){
   filterRejectedBtn.classList.add('bg-white', 'text-black')
 //  console.loh(id)
 const selected = document.getElementById(id)
+currentStatus = id
 // console.log(selected)
 
 
@@ -43,17 +45,19 @@ selected.classList.add('bg-blue-500', 'text-white');
 
 if(id == 'filter-interview-btn'){
   allCardSection.classList.add('hidden');
-  filterSection.classList.remove('hidden');
+  filterSection.classList.remove('hidden')
+  renderInterview()
+
 }else if(id == filter-all-btn){
-  allCardSection.classList.remove('hidden');
+  allCardSection.classList.remove('hidden')
   filterSection.classList.add('hidden');
+
 }else if(id == 'filter-reject-btn'){
   allCardSection.classList.add('hidden');
   filterSection.classList.remove('hidden')
+  renderRejected()
 }
 }
-
-
 
 // PART 3
 mainContainer.addEventListener('click', function(event){
@@ -67,13 +71,13 @@ if(event.target.classList.contains('interview-btn')){
   const remote = parentNode.querySelector('.remote').innerText
   const notApplied = parentNode.querySelector('.not-applied-btn').innerText
 
-parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
-
+  parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
+  
   const cardInfo = { 
-  mobileFirst,
-  developer, 
-  remote,
-  notApplied: 'Applied' ,
+    mobileFirst,
+    developer, 
+    remote,
+    notApplied :'Applied'
   }
  
   const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
@@ -83,9 +87,17 @@ parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
   if(!mobileExist){
   interviewList.push(cardInfo)
   }
+  
+  // filtered
+  rejectedList = rejectedList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
   calculateCount()
-  renderInterview()
+
+  if(currentStatus == 'filter-reject-btn')
+  
+  renderRejected()
 }
+
+
 else if(event.target.classList.contains('rejected-btn')){
    const parentNode = event.target.parentNode.parentNode;
 
@@ -100,7 +112,77 @@ parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
   mobileFirst,
   developer, 
   remote,
-  notApplied: 'Rejected' ,
+  notApplied: 'Rejected'
+  }
+ 
+  const mobileExist = rejectedList.find(item => item.mobileFirst == cardInfo.mobileFirst)
+
+  if(!mobileExist){
+  rejectedList.push(cardInfo)
+  }
+  // FILTERING
+ interviewList = interviewList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
+
+ if(currentStatus == "filter-interview-btn"){
+  renderInterview();
+ }
+ calculateCount()
+}
+})
+
+mainContainer.addEventListener('click', function(event){
+
+
+if(event.target.classList.contains('interview-btn')){
+   const parentNode = event.target.parentNode.parentNode;
+
+  const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
+  const developer = parentNode.querySelector('.developer').innerText
+  const remote = parentNode.querySelector('.remote').innerText
+  const notApplied = parentNode.querySelector('.not-applied-btn').innerText
+
+  parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
+  
+  const cardInfo = { 
+    mobileFirst,
+    developer, 
+    remote,
+    notApplied :'Applied'
+  }
+ 
+  const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
+
+  
+
+  if(!mobileExist){
+  interviewList.push(cardInfo)
+  }
+  
+  // filtered
+  rejectedList = rejectedList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
+  calculateCount()
+
+  if(currentStatus == 'filter-interview-btn')
+  
+  renderInterview()
+}
+
+
+else if(event.target.classList.contains('rejected-btn')){
+   const parentNode = event.target.parentNode.parentNode;
+
+  const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
+  const developer = parentNode.querySelector('.developer').innerText
+  const remote = parentNode.querySelector('.remote').innerText
+  const notApplied = parentNode.querySelector('.not-applied-btn').innerText
+
+parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
+
+  const cardInfo = { 
+  mobileFirst,
+  developer, 
+  remote,
+  notApplied: 'Applied'
   }
  
   const mobileExist = rejectedList.find(item => item.mobileFirst == cardInfo.mobileFirst)
@@ -110,10 +192,19 @@ parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
   if(!mobileExist){
   rejectedList.push(cardInfo)
   }
-  calculateCount()
-  renderRejected()
+
+  // FILTERING
+ interviewList = interviewList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
+
+ if(currentStatus == "filter-interview-btn"){
+  renderInterview();
+ }
+ calculateCount()
+ 
 }
 })
+
+
 
 
 function renderInterview(){
