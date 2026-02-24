@@ -16,6 +16,7 @@ const filterRejectedBtn = document.getElementById('filter-reject-btn')
 const allCardSection = document.getElementById('all-cards');
 const mainContainer = document.querySelector('main')
 const filterSection = document.getElementById('filtered-section')
+const noJobs = document.getElementById('no-jobs')
 
 // -----------------
 function calculateCount(){
@@ -42,26 +43,37 @@ currentStatus = id
 
 selected.classList.remove('bg-white', 'text-black');
 selected.classList.add('bg-blue-500', 'text-white');
+noJobs.classList.add("hidden")
 
 if(id == 'filter-interview-btn'){
   allCardSection.classList.add('hidden');
   filterSection.classList.remove('hidden')
+  if(interviewList.length < 1){
+ noJobs.classList.remove("hidden")
+  }
+
+  
   renderInterview()
 
 }else if(id == 'filter-all-btn'){
   allCardSection.classList.remove('hidden')
   filterSection.classList.add('hidden');
+  if(allCardSection.children.length < 1){
+ noJobs.classList.remove("hidden")
+  }
 
 }else if(id == 'filter-reject-btn'){
   allCardSection.classList.add('hidden');
   filterSection.classList.remove('hidden')
+  if(rejectedList.length < 1){
+ noJobs.classList.remove("hidden")
+  }
   renderRejected()
 }
 }
 
 // PART 3
 mainContainer.addEventListener('click', function(event){
-
 
 if(event.target.classList.contains('interview-btn')){
    const parentNode = event.target.parentNode.parentNode;
@@ -82,8 +94,6 @@ if(event.target.classList.contains('interview-btn')){
  
   const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
 
-  
-
   if(!mobileExist){
   interviewList.push(cardInfo)
   }
@@ -96,8 +106,6 @@ if(event.target.classList.contains('interview-btn')){
   
   renderRejected()
 }
-
-
 else if(event.target.classList.contains('rejected-btn')){
    const parentNode = event.target.parentNode.parentNode;
 
@@ -128,87 +136,102 @@ console.log(currentStatus);
   console.log(interviewList);
  }
  calculateCount()
-}
+
+}const card = event.target.closest(".card")
+  const parent = card.parentNode;
+if (event.target.classList.contains("delete-btn")) {
+    parent.removeChild(card);
+  }
 })
 
-mainContainer.addEventListener('click', function(event){
+// const card = event.target.closest(".card");
+//   const parent = card.parentNode;
+// if (event.target.classList.contains("delete")) {
+//     parent.removeChild(card);
+//   }
 
 
-if(event.target.classList.contains('interview-btn')){
-   const parentNode = event.target.parentNode.parentNode;
+// mainContainer.addEventListener('click', function(event){
 
-  const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
-  const developer = parentNode.querySelector('.developer').innerText
-  const remote = parentNode.querySelector('.remote').innerText
-  const notApplied = parentNode.querySelector('.not-applied-btn').innerText
 
-  parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
+// if(event.target.classList.contains('interview-btn')){
+//    const parentNode = event.target.parentNode.parentNode;
+
+//   const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
+//   const developer = parentNode.querySelector('.developer').innerText
+//   const remote = parentNode.querySelector('.remote').innerText
+//   const notApplied = parentNode.querySelector('.not-applied-btn').innerText
+
+//   parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
   
-  const cardInfo = { 
-    mobileFirst,
-    developer, 
-    remote,
-    notApplied :'Applied'
-  }
+//   const cardInfo = { 
+//     mobileFirst,
+//     developer, 
+//     remote,
+//     notApplied :'Applied'
+//   }
  
-  const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
+//   const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
 
   
 
-  if(!mobileExist){
-  interviewList.push(cardInfo)
-  }
+//   if(!mobileExist){
+//   interviewList.push(cardInfo)
+//   }
   
-  // filtered
-  rejectedList = rejectedList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
-  calculateCount()
+//   // filtered
+//   rejectedList = rejectedList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
+//   calculateCount()
 
-  if(currentStatus == 'filter-interview-btn')
+//   if(currentStatus == 'filter-interview-btn')
   
-  renderInterview()
-}
+//   renderInterview()
+// }
 
 
-else if(event.target.classList.contains('rejected-btn')){
-   const parentNode = event.target.parentNode.parentNode;
+// else if(event.target.classList.contains('rejected-btn')){
+//    const parentNode = event.target.parentNode.parentNode;
 
-  const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
-  const developer = parentNode.querySelector('.developer').innerText
-  const remote = parentNode.querySelector('.remote').innerText
-  const notApplied = parentNode.querySelector('.not-applied-btn').innerText
+//   const mobileFirst = parentNode.querySelector('.mobileFirst').innerText
+//   const developer = parentNode.querySelector('.developer').innerText
+//   const remote = parentNode.querySelector('.remote').innerText
+//   const notApplied = parentNode.querySelector('.not-applied-btn').innerText
 
-parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
+// parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
 
-  const cardInfo = { 
-  mobileFirst,
-  developer, 
-  remote,
-  notApplied: 'Applied'
-  }
+//   const cardInfo = { 
+//   mobileFirst,
+//   developer, 
+//   remote,
+//   notApplied: 'Applied'
+//   }
  
-  const mobileExist = rejectedList.find(item => item.mobileFirst == cardInfo.mobileFirst)
+//   const mobileExist = rejectedList.find(item => item.mobileFirst == cardInfo.mobileFirst)
 
   
 
-  if(!mobileExist){
-  rejectedList.push(cardInfo)
-  }
+//   if(!mobileExist){
+//   rejectedList.push(cardInfo)
+//   }
 
-  // FILTERING
- interviewList = interviewList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
+//   // FILTERING
+//  interviewList = interviewList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
 
- if(currentStatus == "filter-interview-btn"){
-  renderInterview();
- }
- calculateCount()
+//  if(currentStatus == "filter-interview-btn"){
+//   renderInterview();
+//  }
+//  calculateCount()
  
-}
-})
+// }
+// })
 
 
 
 
 function renderInterview(){
+  if(interviewList.length < 1){
+    noJobs.classList.remove("hidden")
+  }
    filterSection.innerHTML = ''
 
    for(let interview of interviewList){
@@ -254,6 +277,10 @@ Full-time
    }
 } 
 function renderRejected(){
+  if(rejectedList.length < 1){
+    noJobs.classList.remove("hidden")
+
+  }
    filterSection.innerHTML = ''
 
    for(let rejected of rejectedList){
@@ -288,8 +315,8 @@ Full-time
 </div>
 
 <div class="gap-10">
-  <button id="interview-btn" class="border border-green-600 px-5 p-1  font-bold text-green-700 rounded">interview</button>
-  <button id="rejected-btn" class="border border-red-600 px-5 p-1  font-bold text-red-700 rounded">Rejected</button>
+  <button class="interview-btn border border-green-600 px-5 p-1  font-bold text-green-700 rounded">interview</button>
+  <button class="rejected-btn border border-red-600 px-5 p-1  font-bold text-red-700 rounded">Rejected</button>
 </div>
 
 </div>
