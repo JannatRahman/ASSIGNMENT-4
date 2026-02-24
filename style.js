@@ -48,7 +48,7 @@ if(id == 'filter-interview-btn'){
   filterSection.classList.remove('hidden')
   renderInterview()
 
-}else if(id == filter-all-btn){
+}else if(id == 'filter-all-btn'){
   allCardSection.classList.remove('hidden')
   filterSection.classList.add('hidden');
 
@@ -77,7 +77,7 @@ if(event.target.classList.contains('interview-btn')){
     mobileFirst,
     developer, 
     remote,
-    notApplied :'Applied'
+    notApplied: 'Applied'
   }
  
   const mobileExist = interviewList.find(item => item.mobileFirst == cardInfo.mobileFirst)
@@ -122,9 +122,10 @@ parentNode.querySelector('.not-applied-btn').innerText = 'Rejected'
   }
   // FILTERING
  interviewList = interviewList.filter(item => item.mobileFirst != cardInfo.mobileFirst )
-
+console.log(currentStatus);
  if(currentStatus == "filter-interview-btn"){
   renderInterview();
+  console.log(interviewList);
  }
  calculateCount()
 }
@@ -237,13 +238,13 @@ Full-time
 </div>
 
 <div class="mb-5">
-  <button class="not-applied-btn bg-blue-100 px-5 py-1 rounded mb-2 ">${interview.status}</button>
+  <button class="not-applied-btn bg-blue-100 px-5 py-1 rounded mb-2 ">${interview.notApplied}</button>
   <p class="para-1-text text-gray-700">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
 </div>
 
 <div class="gap-10">
-  <button id="interview-btn" class="border border-green-600 px-5 p-1  font-bold text-green-700 rounded">interview</button>
-  <button id="rejected-btn" class="border border-red-600 px-5 p-1  font-bold text-red-700 rounded">Rejected</button>
+  <button class="interview-btn border border-green-600 px-5 p-1  font-bold text-green-700 rounded">interview</button>
+  <button class="rejected-btn border border-red-600 px-5 p-1  font-bold text-red-700 rounded">Rejected</button>
 </div>
 
 </div>
