@@ -283,7 +283,7 @@ Full-time
 </div>
 
 <div class="mb-5">
-  <button class="not-applied-btn bg-blue-100 px-5 py-1 rounded mb-2 ">${rejected.status}</button>
+  <button class="not-applied-btn bg-blue-100 px-5 py-1 rounded mb-2 ">${rejected.notApplied}</button>
   <p class="para-1-text text-gray-700">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
 </div>
 
